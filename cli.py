@@ -19,7 +19,7 @@ def cmd_add(args, manager: TaskManager):
 
 
 def cmd_list(args, manager: TaskManager):
-    tasks = manager.list_tasks(show_done=args.all)
+    tasks = manager.list_tasks(show_done=args.all, priority=getattr(args, "priority", None))
     if not tasks:
         print("タスクはありません")
         return
@@ -52,6 +52,7 @@ def main():
 
     p_list = sub.add_parser("list", help="タスク一覧")
     p_list.add_argument("--all", action="store_true", help="完了済みも表示")
+    p_list.add_argument("--priority", choices=["high", "medium", "low"], help="優先度でフィルタ")
 
     p_done = sub.add_parser("done", help="タスクを完了")
     p_done.add_argument("id", type=int)

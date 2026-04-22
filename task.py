@@ -65,8 +65,10 @@ class TaskManager:
         self._save()
         return True
 
-    def list_tasks(self, show_done: bool = False) -> list[Task]:
+    def list_tasks(self, show_done: bool = False, priority: Optional[str] = None) -> list[Task]:
         tasks = self.tasks if show_done else [t for t in self.tasks if not t.done]
+        if priority:
+            tasks = [t for t in tasks if t.priority == priority]
         return sorted(tasks, key=lambda t: (t.due_date or date.max, t.priority))
 
     def _find(self, task_id: int) -> Optional[Task]:
