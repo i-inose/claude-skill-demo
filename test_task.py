@@ -61,3 +61,11 @@ def test_list_tasks_sorted_by_due_date(manager):
 def test_priority_stored_correctly(manager):
     task = manager.add("高優先度", priority="high")
     assert task.priority == "high"
+
+
+def test_filter_by_priority(manager):
+    manager.add("高優先度タスク", priority="high")
+    manager.add("中優先度タスク", priority="medium")
+    tasks = manager.list_tasks(priority="high")
+    assert len(tasks) == 1
+    assert tasks[0].priority == "high"
